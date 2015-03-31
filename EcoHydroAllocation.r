@@ -106,6 +106,8 @@ maxRAI = t*V/k*(1+log(alpha_f*L_not/V) - alpha_f*L_not/V*exp(-k*maxLAI))/c_r
 bit.r = maxRAI/1000
 bit.l = maxLAI/1000
 
+rho_l = 1 #the nitrogen in the plant per LAI - not used in this paper. 
+
 r_cfine = l_cfine = 0.01
 
 rain.lab = expression(paste(plain("Total annual rainfall (mm "),plain(yr^-1),plain(")"),sep=""))
