@@ -1,7 +1,8 @@
 #Last updated 22 NOV 2014
 
-#Rcode used to find ESS allocation strategies under different rainfall regimes. 
-#and to make plots 
+#Code used to find ESS allocation strategies under different rainfall regimes. 
+#and to make plots presented in the Paper Farrior et al. 2015 PNAS - Decreased water limitation under elevated CO2 amplifies potential for forest carbon sinks
+#Paper url: http://dx.doi.org/10.1073/pnas.1506262112
 
 #to use follow these steps: 
 #(1) Create two folders: "~/Documents/Farrior_etal_EcoHydroAllocation/" and "~/Documents/Farrior_etal_EcoHydroAllocation/Figures"
@@ -80,7 +81,7 @@ leafmass_tot = function(L,l){
 c_l.tot = function(L,l) cl_not + cl_lin*l +cl_exp*exp(-k*l) #given light level and the number of leaf layers, c_l.tot computes the total yearly cost of having that LAI (l). 
 
 RMA = 22.46 #gC/m2  fine root mass per unit area
-r_l = 2 #the average lifetime of a fine-root  #work on this here!?
+r_l = 2 #the average lifetime of a fine-root  
 c_r = RMA*(1/r_l+1.2) #gC/m2/year  cost of fine root biomass per unit crown area per year             
 
 c_b.g = 0.33 #gC/gC  growth respiration of structural biomass
@@ -180,8 +181,7 @@ PaperPlots = function(filestemAdd="",p.cex=1,ylims=FALSE,xlims=FALSE){
 	par(mfg = c(2,2))
 	plot3d(data = data.frame(lambda=unique(data$lambda)),legend=TRUE,legx=1.06,p.cex=p.cex)
 	mtext(expression(paste(lambda,plain(" ( "),plain(day^-1),plain(")"),sep="")),line=1.5,side=2,cex=0.85)
-#	mtext(aV[4],adj=-.4,line=1)
-	
+
 	dev.copy(pdf,paste(figurefilestem,"alloc_fig.pdf",sep=""),width=wd/26,height=ht)
 	dev.off()
 	}#end Figure 1
@@ -246,7 +246,6 @@ PaperPlots = function(filestemAdd="",p.cex=1,ylims=FALSE,xlims=FALSE){
 		axis(1,padj=-.5)
 		axis(2,padj=.5)
 		if(i==1) mtext("Change in carbon storage",line=0,outer=TRUE,side=2,cex=0.9)
-#		if(i==1) mtext(expression(paste(plain("(kgC "),plain(m^-2),plain(")"),sep="")),line=2,side=2,cex=0.85)
 		mtext(toplab,side=3,line=.8)
 		mtext(aV[i],adj=0.1,line=-1)	
 		plot3d(y,data,p.cex=p.cex)
@@ -257,7 +256,6 @@ PaperPlots = function(filestemAdd="",p.cex=1,ylims=FALSE,xlims=FALSE){
 	par(mfg = c(2,2))
 	plot3d(data = data.frame(lambda=unique(data$lambda)),legend=TRUE,legx=1.06,p.cex=p.cex)
 	mtext(expression(paste(lambda,plain(" ( "),plain(day^-1),plain(")"),sep="")),line=1.5,side=2,cex=0.85)
-#	mtext(aV[4],adj=-.4,line=1)	
 	dev.copy(pdf,paste(figurefilestem,"sinks.pdf",sep=""),width=wd/26,height=ht)
 	dev.off()
 	}#end Figure 3
@@ -300,7 +298,6 @@ PaperPlots = function(filestemAdd="",p.cex=1,ylims=FALSE,xlims=FALSE){
 		axis(1,padj=-1)
 		axis(2,padj=1)
 		if(i==1) mtext("property at elevated CO2/\nproperty at ambient CO2",line=-0.5,side=2,cex=0.9,outer=TRUE)
-#		text(xtick,8,ylab,adj=0,cex=.8)
 		mtext(ylab,side=3,line=.8,adj=0)
 		mtext(aV[i],adj=0.1,line=-1)	
 		plot3d(y,data,p.cex=p.cex)
@@ -311,7 +308,6 @@ PaperPlots = function(filestemAdd="",p.cex=1,ylims=FALSE,xlims=FALSE){
 	par(mfg = c(2,2))
 	plot3d(data = data.frame(lambda=unique(data$lambda)),legend=TRUE,legx=1.06,p.cex=p.cex)
 	mtext(expression(paste(lambda,plain(" ( "),plain(day^-1),plain(")"),sep="")),line=1.5,side=2,cex=0.85)
-#	mtext(aV[4],adj=-.4,line=1)	
 	dev.copy(pdf,paste(figurefilestem,"SinkBreakdown.pdf",sep=""),width=wd/26,height=ht)
 	dev.off()
 	}#end Figure 4
@@ -364,7 +360,6 @@ PaperPlots = function(filestemAdd="",p.cex=1,ylims=FALSE,xlims=FALSE){
 	data$l_c = round(data$l_c)
 	j = 0
 	for(i in sort(unique(data$l_c,na.rm=TRUE))){
-#		points(x[data$l_c==i],y[data$l_c==i],col=gray(j),pch=19,cex=p.cex)  #using this instead of the line below gives the full gradation of l_c (not rounding l_c) but it's so visually clear
 		if(i>4) col=i-4
 		if(i==4) col=1
 		points(x[data$l_c==i],y[data$l_c==i],col=col,pch=19,cex=.8)
@@ -606,9 +601,7 @@ PaperPlots = function(filestemAdd="",p.cex=1,ylims=FALSE,xlims=FALSE){
 		ylab="",xlim=c(0,1),ylim=c(0,1))
 	plot3d(y,data,p.cex=p.cex,column=10)
 	mtext(expression(italic(q)),side=1,line=3,cex=1.2)
-#	mtext("Proportion of time without water limitation",side=1,line=3,cex=.8)
 	mtext(expression(paste(italic(q),scriptstyle(n),sep="")),side=2,line=3,cex=1.2)
-#	mtext("Proportion of time in water limitation",side=2,line=3,cex=.8)
 	abline(1,-1,col="red",lwd=2)
 	dev.copy(pdf,paste(figurefilestem,"qn.pdf",sep=""),width=3.5,height=3.5)
 	dev.off()
